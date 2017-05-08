@@ -77,3 +77,24 @@ class Fare(BaseEstimator, TransformerMixin):
         fare = [d for d in documents]
         return np.array([fare]).T
 
+class Cabin(BaseEstimator, TransformerMixin):
+    def get_feature_names(self):
+        return np.array(['cabin'])
+
+    def fit(self, documents, y=None):
+        return self
+
+    def transform(self, documents):
+        A = ord('A')
+        cabin  = []
+        for d in documents:
+            if d == "":
+                value = 0
+            else:
+                for c in d:
+                    if c.isalpha():
+                        value = ord(c) - A + 1
+                        break
+            cabin.append(value)
+        return np.array([cabin]).T
+
